@@ -1,4 +1,6 @@
 # Realtime Youtube Live Metrics Checker
+https://rt-ytube-live-metrics-checker.firebaseapp.com/dashboard
+
 ## 使用技術
 ### フロントエンド
 - React
