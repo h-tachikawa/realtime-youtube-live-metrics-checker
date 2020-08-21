@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
-import { Header, Container, Icon, Label, List, Segment, Menu, Popup, Image, Grid, GridRow, GridColumn, Divider } from "semantic-ui-react";
+import { Header, Container, Icon, Label, List, Segment, Image, Grid, GridRow, GridColumn, Divider } from "semantic-ui-react";
+import { toast, Slide } from "react-toastify";
 import style from "./App.module.scss";
 import { LiveRepository } from "./repository";
 import { LivePresenter } from "./presenter";
 import { LiveDetail, LiveSetting, LiveSnippet } from "./type";
 import firebase, { firestore } from "./external/firebase";
+import { AppHeader } from "./AppHeader";
+import { useGlobalState } from "./state";
 
 export const convertToLiveDetails = (querySnapshot: firebase.firestore.QuerySnapshot) => {
   const liveDetails: LiveDetail[] = [];
   querySnapshot.forEach((doc) => {
     const liveDetail = doc.data() as LiveDetail;
-    liveDetails.push(liveDetail); // mutable なのが気持ち悪いので直したい
+    liveDetails.push(liveDetail); // TODO: mutable なのが気持ち悪いので直したい
   });
 
   liveDetails.sort((a, b) => {
@@ -31,6 +34,7 @@ export const convertToLiveDetails = (querySnapshot: firebase.firestore.QuerySnap
 };
 
 const App: React.FC = () => {
+  const [notifier, setNotifier] = useGlobalState("notifier");
   const [liveId, setLiveId] = useState<string>("");
   const [liveDetails, setLiveDetails] = useState<LiveDetail[]>([]);
   const [liveSnippet, setLiveSnippet] = useState<LiveSnippet>({
@@ -40,6 +44,19 @@ const App: React.FC = () => {
     title: "",
     videoId: ""
   });
+
+  switch(notifier.type) {
+    case "info":
+      toast.info(notifier.text, { hideProgressBar: true, transition: Slide })
+      setNotifier({type: "none", text: ""}); // TODO: 無理やり感がありすぎるので、グローバルの状態管理方法を変える
+      break;
+    case "error":
+      toast.error(notifier.text, { hideProgressBar: true, transition: Slide })
+      setNotifier({type: "none", text: ""});
+      break;
+    default:
+      break;
+  }
 
   useEffect(() => {
     firestore.collection("settings").doc("setting").get().then((docSnapshot) => {
@@ -69,44 +86,6 @@ const App: React.FC = () => {
 
   const { channelTitle, title, thumbnailImageUrl, tags, videoId } = liveSnippet;
   const liveUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-  const AppHeader: React.FC = () => {
-    const popupStyle = {
-      borderRadius: 0,
-      opacity: 0.7,
-    };
-
-    return (
-      <header className={style.menuContainer}>
-        <Menu fixed="top" pointing secondary size="large" className={style.menuContainer} inverted>
-          <Menu.Item header>
-            Realtime Youtube Live Metrics Checker
-          </Menu.Item>
-          <Menu.Item link active className={style.menuItem}>
-            <Icon name="home"/>
-            ホーム
-          </Menu.Item>
-          <Menu.Item link className={style.menuItem}>
-            <Icon name="setting"/>
-            設定
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Popup
-                content="アプリケーションからログアウトします。"
-                trigger={
-                  <Menu.Item link className={style.menuItem}>
-                    <Icon name="log out"/>
-                  </Menu.Item>
-                }
-                position="bottom right"
-                inverted
-                style={popupStyle}
-            />
-          </Menu.Menu>
-        </Menu>
-      </header>
-    );
-  };
 
   const ConcurrentViewersChart: React.FC = () => {
     const data = LivePresenter.constructConcurrentViewersData(liveDetails);
