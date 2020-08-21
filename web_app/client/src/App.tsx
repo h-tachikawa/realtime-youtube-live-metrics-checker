@@ -6,8 +6,7 @@ import style from "./App.module.scss";
 import { LiveRepository } from "./repository";
 import { LivePresenter } from "./presenter";
 import { LiveDetail, LiveSetting, LiveSnippet } from "./type";
-import firebase from "firebase";
-import { firestore } from "./external/firebase";
+import firebase, { firestore } from "./external/firebase";
 
 export const convertToLiveDetails = (querySnapshot: firebase.firestore.QuerySnapshot) => {
   const liveDetails: LiveDetail[] = [];
