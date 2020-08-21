@@ -1,0 +1,6 @@
+cron:
+  - description: "Youtube から取得したライブ情報を Pub/Sub のトピックにパブリッシュする"
+    url: /api/live-details
+    schedule: every 30 minutes
+    timezone: Asia/Tokyo
+    target: job

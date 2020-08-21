@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Live
+  properties:
+    - name: videoId
+    - name: time
+      direction: asc

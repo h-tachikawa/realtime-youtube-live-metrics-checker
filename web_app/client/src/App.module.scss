@@ -1,0 +1,30 @@
+.container {
+  margin: 30px;
+}
+
+.menuContainer {
+  background-color: #181818!important;
+  margin-top: 80px;
+}
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.toggleLabel {
+  margin-right: 8px;
+}
+
+// TODO: semantic-ui が!importantで指定しているスタイルを力づくで上書きしている
+:global {
+  .ui.toggle.checkbox.checked input:focus:checked~label:before {
+    background-color: #181818!important;
+  }
+
+  .ui.toggle.checkbox.checked input:checked~label:before {
+    background-color: #181818!important;
+  }
+}
