@@ -1,5 +1,5 @@
 # Realtime Youtube Live Metrics Checker
-Demo: https://rt-ytube-live-metrics-checker.firebaseapp.com/dashboard
+Demo: https://rt-ytube-live-metrics-checker.firebaseapp.com
 
 ## 使用技術
 ### フロントエンド
