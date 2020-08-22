@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, Divider, Header, Form, Button } from "semantic-ui-react";
-import style from "./App.module.scss";
-import { AppHeader } from "./AppHeader";
-import { firestore } from "./external/firebase";
-import { LiveSetting } from "./type";
 import { useHistory } from "react-router-dom";
+import { firestore } from "./external/firebase";
+import { AppHeader } from "./AppHeader";
+import { LiveSetting } from "./type";
 import { useGlobalState } from "./state";
+import style from "./App.module.scss";
 
 const SettingsHeader: React.FC = () => (
     <div>
@@ -37,7 +37,7 @@ const Settings: React.FC = () => {
       setNotifier({type: "info", text: "配信IDを変更しました！"})
     } catch (e) {
       console.error(e);
-      setNotifier({type: "error", text: "配信IDの変更に失敗しました"})
+      setNotifier({type: "error", text: "配信IDの変更に失敗しました。再度お試しください。"})
     } finally {
       history.push("/dashboard");
     }

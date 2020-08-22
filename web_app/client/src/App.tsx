@@ -48,11 +48,11 @@ const App: React.FC = () => {
   switch(notifier.type) {
     case "info":
       toast.info(notifier.text, { hideProgressBar: true, transition: Slide })
-      setNotifier({type: "none", text: ""}); // TODO: 無理やり感がありすぎるので、グローバルの状態管理方法を変える
+      setNotifier({type: "none" });
       break;
     case "error":
       toast.error(notifier.text, { hideProgressBar: true, transition: Slide })
-      setNotifier({type: "none", text: ""});
+      setNotifier({type: "none" });
       break;
     default:
       break;
