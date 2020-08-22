@@ -7,6 +7,7 @@ export interface LiveDetail {
 }
 
 export interface LiveSnippet {
+  liveUrl: string;
   videoId: string;
   title: string;
   thumbnailImageUrl: string;

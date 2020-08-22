@@ -1,49 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 import { Header, Container, Icon, Label, List, Segment, Image, Grid, GridRow, GridColumn, Divider } from "semantic-ui-react";
 import { toast, Slide } from "react-toastify";
 import style from "./App.module.scss";
-import { LiveRepository } from "./repository";
 import { LivePresenter } from "./presenter";
-import { LiveDetail, LiveSetting, LiveSnippet } from "./type";
-import firebase, { firestore } from "./external/firebase";
 import { AppHeader } from "./AppHeader";
 import { useGlobalState } from "./state";
-
-export const convertToLiveDetails = (querySnapshot: firebase.firestore.QuerySnapshot) => {
-  const liveDetails: LiveDetail[] = [];
-  querySnapshot.forEach((doc) => {
-    const liveDetail = doc.data() as LiveDetail;
-    liveDetails.push(liveDetail); // TODO: mutable なのが気持ち悪いので直したい
-  });
-
-  liveDetails.sort((a, b) => {
-    if (a.time < b.time) {
-      return -1;
-    }
-
-    if (a.time > b.time) {
-      return 1;
-    }
-
-    return 0;
-  });
-
-  return liveDetails;
-};
+import { useYoutubeLiveData } from "./hooks/useYoutubeLiveData";
 
 const App: React.FC = () => {
+  const { liveSnippet, liveDetails } = useYoutubeLiveData();
+
   const [notifier, setNotifier] = useGlobalState("notifier");
-  const [liveId, setLiveId] = useState<string>("");
-  const [liveDetails, setLiveDetails] = useState<LiveDetail[]>([]);
-  const [liveSnippet, setLiveSnippet] = useState<LiveSnippet>({
-    channelTitle: "",
-    tags: [],
-    thumbnailImageUrl: "",
-    title: "",
-    videoId: ""
-  });
 
   switch(notifier.type) {
     case "info":
@@ -58,34 +27,7 @@ const App: React.FC = () => {
       break;
   }
 
-  useEffect(() => {
-    firestore.collection("settings").doc("setting").get().then((docSnapshot) => {
-      const res = docSnapshot.data() as LiveSetting;
-      setLiveId((res.videoId));
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!liveId) {
-      return;
-    }
-
-    LiveRepository.fetchLiveSnippet(liveId).then(({ data }) => setLiveSnippet(data));
-
-    const unsubscribe = firestore.collection("lives")
-        .where("videoId", "==", liveId)
-        .orderBy("time", "desc")
-        .limit(10)
-        .onSnapshot((querySnapshot) => {
-          const liveDetails = convertToLiveDetails(querySnapshot)
-          setLiveDetails(liveDetails);
-        });
-
-    return () => unsubscribe();
-  }, [setLiveDetails, liveId]);
-
-  const { channelTitle, title, thumbnailImageUrl, tags, videoId } = liveSnippet;
-  const liveUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  const { channelTitle, title, thumbnailImageUrl, tags, liveUrl } = liveSnippet;
 
   const ConcurrentViewersChart: React.FC = () => {
     const data = LivePresenter.constructConcurrentViewersData(liveDetails);
