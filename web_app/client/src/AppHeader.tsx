@@ -19,7 +19,7 @@ export const AppHeader: React.FC = () => {
             Realtime Youtube Live Metrics Checker
           </Menu.Item>
           <Menu.Item link active={pathname === "/dashboard"} className={style.menuItem} onClick={() => history.push("/dashboard")}>
-            <Icon name="home"/>
+            <Icon name="dashboard"/>
             ダッシュボード
           </Menu.Item>
           <Menu.Item link active={pathname === "/settings"} className={style.menuItem} onClick={() => history.push("/settings")}>
