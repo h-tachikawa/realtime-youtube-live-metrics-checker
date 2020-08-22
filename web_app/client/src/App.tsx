@@ -5,8 +5,7 @@ import { Header, Container, Icon, Label, List, Segment, Image, Grid, GridRow, Gr
 import style from "./App.module.scss";
 import { LivePresenter } from "./presenter";
 import { AppHeader } from "./AppHeader";
-import { useYoutubeLiveData } from "./hooks/useYoutubeLiveData";
-import { useNotifierEffect } from "./useNotifierEffect";
+import { useYoutubeLiveData, useNotifierEffect } from "./hooks";
 
 const App: React.FC = () => {
   useNotifierEffect();

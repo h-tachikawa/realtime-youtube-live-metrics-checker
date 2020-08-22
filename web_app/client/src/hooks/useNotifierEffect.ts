@@ -1,4 +1,4 @@
-import { useGlobalState } from "./state";
+import { useGlobalState } from "../state";
 import { Slide, toast } from "react-toastify";
 
 export const useNotifierEffect = () => {
