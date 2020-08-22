@@ -26,6 +26,7 @@ func GetLiveDetails(videoId string) (*domain.LiveDetails, error) {
 	chatId := res.Result().(*domain.GetVideoListResponse).Items[0].LiveStreamingDetails.ActiveLiveChatID
 	liveDetails := res.Result().(*domain.GetVideoListResponse).Items[0]
 	chatDetails := &domain.LiveDetails{
+		LiveId:            videoId,
 		ChatId:            chatId,
 		ConcurrentViewers: liveDetails.LiveStreamingDetails.ConcurrentViewers,
 		LikeCount:         liveDetails.Statistics.LikeCount,

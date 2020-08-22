@@ -13,6 +13,7 @@ type GetVideoListResponse struct {
 }
 
 type LiveDetails struct {
+	LiveId            string
 	ChatId            string
 	ConcurrentViewers string
 	LikeCount         string

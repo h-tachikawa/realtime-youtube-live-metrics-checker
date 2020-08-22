@@ -7,6 +7,7 @@ import (
 	"example.com/analysis-youtube-app/infrastructure"
 	"log"
 	"os"
+	"time"
 )
 
 /**
@@ -57,20 +58,34 @@ func RecordCurrentLiveDetails(ctx context.Context) (string, error) {
 func constructMessage(videoId string, chat *domain.LiveChatMessages, liveDetails *domain.LiveDetails) ([]byte, error) {
 	var response []*domain.LiveDetail
 
-	for _, ci := range chat.Items {
-		usr := ci.AuthorDetails.DisplayName
-		msg := ci.Snippet.DisplayMessage
-		chatInfo := &domain.LiveDetail{
-			VideoId:           videoId,
-			ChatId:            liveDetails.ChatId,
+	if chat.Items == nil {
+		res := &domain.LiveDetail{
+			VideoId:           liveDetails.LiveId,
+			ChatId:            "",
 			ConcurrentViewers: liveDetails.ConcurrentViewers,
+			UserName:          "",
+			Message:           "",
+			PublishedAt:       time.Now(),
 			LikeCount:         liveDetails.LikeCount,
 			DislikeCount:      liveDetails.DislikeCount,
-			UserName:          usr,
-			Message:           msg,
-			PublishedAt:       ci.Snippet.PublishedAt,
 		}
-		response = append(response, chatInfo)
+		response = append(response, res)
+	} else {
+		for _, ci := range chat.Items {
+			usr := ci.AuthorDetails.DisplayName
+			msg := ci.Snippet.DisplayMessage
+			chatInfo := &domain.LiveDetail{
+				VideoId:           videoId,
+				ChatId:            liveDetails.ChatId,
+				ConcurrentViewers: liveDetails.ConcurrentViewers,
+				LikeCount:         liveDetails.LikeCount,
+				DislikeCount:      liveDetails.DislikeCount,
+				UserName:          usr,
+				Message:           msg,
+				PublishedAt:       ci.Snippet.PublishedAt,
+			}
+			response = append(response, chatInfo)
+		}
 	}
 
 	responseAsByteArr, err := json.Marshal(response)

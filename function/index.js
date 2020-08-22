@@ -7,32 +7,12 @@ admin.initializeApp({
 
 const fireStore = admin.firestore();
 
-exports.testFireStore = async (req, res) => {
-    const citiesRef = fireStore.collection('cities');
-    await citiesRef.doc('SF').set({
-        name: 'San Francisco', state: 'CA', country: 'USA',
-        capital: false, population: 860000 })
-
-    const cityRef = fireStore.collection('cities').doc('SF')
-    cityRef.get()
-        .then(doc => {
-            if (!doc.exists) {
-                res.status(200).send('No such document!')
-            } else {
-                res.status(200).send(doc.data())
-            }
-        })
-        .catch(err => {
-            res.status(404).send('not found')
-        })
-}
-
-exports.convertLiveDetails = async (event, context) => {
+exports.convertLiveDetails = async (event) => {
     const message = event.data
         ? Buffer.from(event.data, 'base64').toString()
         : 'Hello, World';
-    const chatMessages = JSON.parse(message);
-    const messages = chatMessages.map((chat) => ({
+    const liveDetails = JSON.parse(message);
+    const messages = liveDetails.map((chat) => ({
         videoId: chat.videoId,
         chatId: chat.chatId,
         concurrentViewers: chat.concurrentViewers,

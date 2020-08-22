@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gcloud functions deploy convertLiveDetails --trigger-topic live-topic --region asia-northeast1 --runtime nodejs10"
   },
   "author": "h-tachikawa",
   "license": "ISC",
