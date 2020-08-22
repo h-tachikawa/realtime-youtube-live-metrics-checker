@@ -2,31 +2,15 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 import { Header, Container, Icon, Label, List, Segment, Image, Grid, GridRow, GridColumn, Divider } from "semantic-ui-react";
-import { toast, Slide } from "react-toastify";
 import style from "./App.module.scss";
 import { LivePresenter } from "./presenter";
 import { AppHeader } from "./AppHeader";
-import { useGlobalState } from "./state";
 import { useYoutubeLiveData } from "./hooks/useYoutubeLiveData";
+import { useNotifierEffect } from "./useNotifierEffect";
 
 const App: React.FC = () => {
+  useNotifierEffect();
   const { liveSnippet, liveDetails } = useYoutubeLiveData();
-
-  const [notifier, setNotifier] = useGlobalState("notifier");
-
-  switch(notifier.type) {
-    case "info":
-      toast.info(notifier.text, { hideProgressBar: true, transition: Slide })
-      setNotifier({type: "none" });
-      break;
-    case "error":
-      toast.error(notifier.text, { hideProgressBar: true, transition: Slide })
-      setNotifier({type: "none" });
-      break;
-    default:
-      break;
-  }
-
   const { channelTitle, title, thumbnailImageUrl, tags, liveUrl } = liveSnippet;
 
   const ConcurrentViewersChart: React.FC = () => {
