@@ -1,16 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import style from "./App.module.scss";
 import { Icon, Menu, Popup } from "semantic-ui-react";
+import style from "./App.module.scss";
+import myStyle from "./AppHeader.module.scss";
 
 export const AppHeader: React.FC = () => {
   const history = useHistory();
   const { pathname } = history.location;
-
-  const popupStyle = {
-    borderRadius: 0,
-    opacity: 0.7,
-  };
 
   return (
       <header className={style.menuContainer}>
@@ -36,7 +32,7 @@ export const AppHeader: React.FC = () => {
                 }
                 position="bottom right"
                 inverted
-                style={popupStyle}
+                className={myStyle.popup}
             />
           </Menu.Menu>
         </Menu>
