@@ -8,23 +8,26 @@ import "semantic-ui-css/semantic.min.css"
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { RecoilRoot } from "recoil";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path="/dashboard">
-          <App />
-        </Route>
-        <Route path="/settings">
-          <Settings />
-        </Route>
-        <Route path="/">
-          <App />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-    <ToastContainer />
+    <RecoilRoot>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard">
+            <App />
+          </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
+          <Route path="/">
+            <App />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+      <ToastContainer />
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );

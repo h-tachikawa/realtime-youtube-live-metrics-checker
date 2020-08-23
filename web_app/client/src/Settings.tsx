@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Container, Divider, Header, Form, Button, Popup, Icon, Grid } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { firestore } from "./external/firebase";
 import { AppHeader } from "./AppHeader";
 import { LiveSetting } from "./type";
-import { useGlobalState } from "./state";
 import style from "./Settings.module.scss";
+import { notifierState } from "./recoil/atom/notifier";
 
 const SettingsHeader: React.FC = () => (
     <div>
@@ -19,8 +20,7 @@ const SettingsHeader: React.FC = () => (
 )
 
 const Settings: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setNotifier] = useGlobalState("notifier");
+  const setNotifier = useSetRecoilState(notifierState);
   const [ liveId, setLiveId ] = useState<string>("");
   const history = useHistory();
 
@@ -51,7 +51,7 @@ const Settings: React.FC = () => {
         <Form.Field inline>
           <Grid columns={2} verticalAlign="middle">
             <Grid.Row>
-              <Grid.Column width="2">
+              <Grid.Column width="3">
                 <label className={style.helpTipLabel}>配信ID</label>
                 <Popup
                     trigger={<Icon name="help circle" color="grey" />}
@@ -61,7 +61,7 @@ const Settings: React.FC = () => {
                     className={style.popup}
                 />
               </Grid.Column>
-              <Grid.Column width="3">
+              <Grid.Column width="4">
                 <input defaultValue={liveId} onChange={(e) => setLiveId(e.target.value)} />
               </Grid.Column>
             </Grid.Row>
