@@ -7,6 +7,7 @@ Demo: https://rt-ytube-live-metrics-checker.firebaseapp.com
 ### フロントエンド
 - React
 - TypeScript
+- Recoil
 - semantic-ui-react
 - react-chartjs-2
 ### バックエンド
