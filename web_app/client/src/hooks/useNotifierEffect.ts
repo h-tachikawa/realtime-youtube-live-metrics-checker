@@ -1,8 +1,9 @@
-import { useGlobalState } from "../state";
 import { Slide, toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { notifierState } from "../recoil/atom/notifier";
 
 export const useNotifierEffect = () => {
-  const [notifier, setNotifier] = useGlobalState("notifier");
+  const [ notifier, setNotifier ] = useRecoilState(notifierState);
 
   switch(notifier.type) {
     case "info":
