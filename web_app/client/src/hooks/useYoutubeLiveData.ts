@@ -45,7 +45,10 @@ export const useYoutubeLiveData = () => {
   }, [setLiveDetails, liveId]);
 
   return {
-    liveId,
+    liveId: {
+      currentLiveId: liveId,
+      setLiveId,
+    },
     liveDetails,
     liveSnippet
   };
