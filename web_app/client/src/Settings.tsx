@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Divider, Header, Form, Button, Popup, Icon, Grid } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { firestore } from "./external/firebase";
 import { AppHeader } from "./AppHeader";
 import style from "./Settings.module.scss";
 import { notifierState } from "./recoil/atom/notifier";
@@ -22,11 +21,11 @@ const SettingsHeader: React.FC = () => (
 const Settings: React.FC = () => {
   const setNotifier = useSetRecoilState(notifierState);
   const history = useHistory();
-  const { liveId: { currentLiveId, setLiveId } } = useYoutubeLiveData();
+  const { liveId: { currentLiveId, setLiveId, persistLiveId } } = useYoutubeLiveData();
 
   const handleSubmit = async () => {
     try {
-      await firestore.collection("settings").doc("setting").update({ videoId: currentLiveId});
+      await persistLiveId(currentLiveId);
       setNotifier({type: "info", text: "配信IDを変更しました！"})
     } catch (e) {
       console.error(e);

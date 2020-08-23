@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LiveDetail, LiveSetting, LiveSnippet } from "../type";
 import { LiveRepository } from "../repository";
 import firebase, { firestore } from "../external/firebase";
@@ -44,10 +44,15 @@ export const useYoutubeLiveData = () => {
     return () => unsubscribe();
   }, [setLiveDetails, liveId]);
 
+  const persistLiveId = useCallback((liveId: string) => {
+    return firestore.collection("settings").doc("setting").update({ videoId: liveId});
+  }, []);
+
   return {
     liveId: {
       currentLiveId: liveId,
       setLiveId,
+      persistLiveId,
     },
     liveDetails,
     liveSnippet
