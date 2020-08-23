@@ -32,7 +32,7 @@ const App: React.FC = () => {
   };
 
   const LikeAndDislikeChart: React.FC = () => {
-    const data = LivePresenter.constructLikeAndDisslikeData(liveDetails);
+    const data = LivePresenter.constructLikeAndDislikeData(liveDetails);
 
     const options: ChartOptions = {
       legend: {

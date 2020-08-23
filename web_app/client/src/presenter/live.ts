@@ -34,7 +34,7 @@ const constructConcurrentViewersData = (liveDetails: LiveDetail[]): ChartData =>
   };
 }
 
-const constructLikeAndDisslikeData = (liveDetails: LiveDetail[]): ChartData => {
+const constructLikeAndDislikeData = (liveDetails: LiveDetail[]): ChartData => {
   const labels = liveDetails.map(({ time }) => dayjs(time).format("HH:mm:ss"));
   const likeCount = liveDetails.map(({ likeCount }) => likeCount);
   const dislikeCount = liveDetails.map(({ dislikeCount }) => dislikeCount);
@@ -89,5 +89,5 @@ const constructLikeAndDisslikeData = (liveDetails: LiveDetail[]): ChartData => {
 }
 
 export const LivePresenter = {
-  constructConcurrentViewersData, constructLikeAndDisslikeData
+  constructConcurrentViewersData, constructLikeAndDislikeData: constructLikeAndDislikeData
 };
