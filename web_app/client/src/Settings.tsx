@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Divider, Header, Form, Button, Popup, Icon, Grid } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { firestore } from "./external/firebase";
 import { AppHeader } from "./AppHeader";
-import { LiveSetting } from "./type";
 import style from "./Settings.module.scss";
 import { notifierState } from "./recoil/atom/notifier";
+import { useYoutubeLiveData } from "./hooks";
 
 const SettingsHeader: React.FC = () => (
     <div>
@@ -21,19 +21,12 @@ const SettingsHeader: React.FC = () => (
 
 const Settings: React.FC = () => {
   const setNotifier = useSetRecoilState(notifierState);
-  const [ liveId, setLiveId ] = useState<string>("");
   const history = useHistory();
-
-  useEffect(() => {
-    firestore.collection("settings").doc("setting").get().then((docSnapshot) => {
-      const res = docSnapshot.data() as LiveSetting;
-      setLiveId((res.videoId));
-    });
-  }, []);
+  const { liveId: { currentLiveId, setLiveId } } = useYoutubeLiveData();
 
   const handleSubmit = async () => {
     try {
-      await firestore.collection("settings").doc("setting").update({ videoId: liveId});
+      await firestore.collection("settings").doc("setting").update({ videoId: currentLiveId});
       setNotifier({type: "info", text: "配信IDを変更しました！"})
     } catch (e) {
       console.error(e);
@@ -62,7 +55,7 @@ const Settings: React.FC = () => {
                 />
               </Grid.Column>
               <Grid.Column width="4">
-                <input defaultValue={liveId} onChange={(e) => setLiveId(e.target.value)} />
+                <input defaultValue={currentLiveId} onChange={(e) => setLiveId(e.target.value)} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
