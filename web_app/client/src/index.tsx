@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
-import App from "./App";
-import Settings from "./Settings";
+import { Dashboard, Settings } from "./container";
 import * as serviceWorker from "./serviceWorker";
 import "semantic-ui-css/semantic.min.css"
 import "react-toastify/dist/ReactToastify.css";
@@ -16,13 +15,13 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           <Route path="/dashboard">
-            <App />
+            <Dashboard />
           </Route>
           <Route path="/settings">
             <Settings />
           </Route>
           <Route path="/">
-            <App />
+            <Dashboard />
           </Route>
         </Switch>
       </BrowserRouter>
