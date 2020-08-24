@@ -12,9 +12,16 @@ jobs:
         env:
           COUNT: ${{ toJson(github.event.repository.stargazers_count) }}
         run: echo "${COUNT}"
-      - uses: 8398a7/action-slack@v1
+      - uses: 8398a7/action-slack@v3
         with:
-          payload: |
-            { "text": "Star: ${{ github.event.repository.stargazers_count }} ${{ github.event.repository.html_url }}" }
+          custom_payload: |
+            {
+              username: 'star-count-observer',
+              icon_emoji: ':octocat:',
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: "Star: ${{ github.event.repository.stargazers_count }} ${{ github.event.repository.html_url }}",
+              }]
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
