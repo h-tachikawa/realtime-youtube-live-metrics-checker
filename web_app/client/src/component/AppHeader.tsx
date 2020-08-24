@@ -1,13 +1,15 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Icon, Menu, Popup } from "semantic-ui-react";
+import { History } from "history";
 import style from "./App.module.scss";
 import myStyle from "./AppHeader.module.scss";
 
-export const AppHeader: React.FC = () => {
-  const history = useHistory();
-  const { pathname } = history.location;
+interface Props {
+  history: History;
+  pathname: string;
+}
 
+export const AppHeader: React.FC<Props> = ({history, pathname}) => {
   return (
       <header className={style.menuContainer}>
         <Menu fixed="top" pointing secondary size="large" className={style.menuContainer} inverted>
