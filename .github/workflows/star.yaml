@@ -1,0 +1,20 @@
+name: Star
+
+on: [watch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump star count
+        env:
+          COUNT: ${{ toJson(github.event.repository.stargazers_count) }}
+        run: echo "${COUNT}"
+      - uses: 8398a7/action-slack@v1
+        with:
+          payload: |
+            { "text": "Star: ${{ github.event.repository.stargazers_count }} ${{ github.event.repository.html_url }}" }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
