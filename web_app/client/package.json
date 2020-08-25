@@ -15,7 +15,7 @@
     "chart.js": "^2.9.3",
     "dayjs": "^1.8.33",
     "eslint-plugin-react-app": "^6.2.2",
-    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-react-hooks": "^4.1.0",
     "firebase": "^7.18.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
@@ -34,7 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn run build && firebase deploy"
+    "deploy": "yarn run build && firebase deploy",
+    "lint": "$(npm bin)/eslint -c ./.eslintrc.js 'src/**/*.{ts,tsx}'"
   },
   "browserslist": {
     "production": [
