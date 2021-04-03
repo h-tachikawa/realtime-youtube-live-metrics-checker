@@ -1,7 +1,7 @@
 # Realtime Youtube Live Metrics Checker
 <img src="https://user-images.githubusercontent.com/40758815/90949580-1f4a4b00-e484-11ea-9e66-03afe349b939.png" width=500 />
 
-Demo: https://rt-ytube-live-metrics-checker.firebaseapp.com
+Demo: https://rt-ytube-live-metrics-checker.web.app
 
 ## 使用技術
 ### フロントエンド
