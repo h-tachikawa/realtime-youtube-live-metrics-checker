@@ -1,5 +1,5 @@
 # Realtime Youtube Live Metrics Checker
-<img src="https://user-images.githubusercontent.com/40758815/113474094-9d55e200-94a8-11eb-9f61-4c33d5168af7.png" width=500 />
+<img src="https://user-images.githubusercontent.com/40758815/113488289-fd27a980-94f7-11eb-844d-a7821a94140b.png" width=500 />
 
 Demo: https://rt-ytube-live-metrics-checker.web.app
 
