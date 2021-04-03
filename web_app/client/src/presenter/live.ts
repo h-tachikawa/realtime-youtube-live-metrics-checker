@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { ChartData } from "chart.js";
 import { LiveDetail } from "../type";
+import { YOUTUBE_RED } from "../colors";
 
 const constructConcurrentViewersData = (liveDetails: LiveDetail[]): ChartData => {
   const labels = liveDetails.map(({ time }) => dayjs(time).format("HH:mm:ss"));
@@ -14,7 +15,7 @@ const constructConcurrentViewersData = (liveDetails: LiveDetail[]): ChartData =>
         fill: false,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "#FF0000",
+        borderColor: YOUTUBE_RED,
         borderCapStyle: "butt",
         borderDash: [],
         borderDashOffset: 0.0,

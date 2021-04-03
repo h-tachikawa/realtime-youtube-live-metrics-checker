@@ -14,6 +14,7 @@ export const useYoutubeLiveData = () => {
     title: "",
     videoId: ""
   });
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     firestore.collection("settings").doc("setting").get().then((docSnapshot) => {
@@ -27,9 +28,11 @@ export const useYoutubeLiveData = () => {
       return;
     }
 
+    setIsLoading(true);
     LiveRepository.fetchLiveSnippet(liveId).then(({ data }) => {
       data.liveUrl = `https://www.youtube.com/watch?v=${data.videoId}`;
       setLiveSnippet(data)
+      setIsLoading(false);
     });
 
     const unsubscribe = firestore.collection("lives")
@@ -49,6 +52,7 @@ export const useYoutubeLiveData = () => {
   }, []);
 
   return {
+    isLoading,
     liveId: {
       currentLiveId: liveId,
       setLiveId,

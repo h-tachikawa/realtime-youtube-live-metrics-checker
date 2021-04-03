@@ -4,9 +4,9 @@ import { Dashboard as ViewComponent } from "../component";
 
 export const Dashboard: React.FC = () => {
   useNotifierEffect();
-  const { liveSnippet, liveDetails } = useYoutubeLiveData();
+  const { isLoading, liveSnippet, liveDetails } = useYoutubeLiveData();
 
   return (
-    <ViewComponent liveDetails={liveDetails} liveInformation={liveSnippet} />
+    <ViewComponent liveDetails={liveDetails} liveInformation={{...liveSnippet, isLoading}} />
   );
 }
