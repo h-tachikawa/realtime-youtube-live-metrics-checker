@@ -31,17 +31,12 @@ describe("Container/AppHeader", () => {
     });
   });
 
-  describe("when dashboard clicked", () => {
+  describe("when dashboard link clicked", () => {
     it("should move to /dashboard path", async () => {
       render(<AppHeader />);
       const dashboardLink = screen.getByTestId("dashboard");
       user.click(dashboardLink);
 
-      /**
-       * expect(mockHistoryPush).toBeCalled() が true になるまでここまで待つことができる。
-       * なお、現状 --env jest-environment-jsdom-fourteen オプションを jest コマンドに渡さないと、
-       * "TypeError: MutationObserver is not a constructor" エラーが出てしまうので注意。
-       */
       await waitFor(() => expect(mockHistoryPush).toBeCalled());
 
       expect(mockHistoryPush.mock.calls).toMatchInlineSnapshot(`
@@ -54,7 +49,7 @@ describe("Container/AppHeader", () => {
     });
   });
 
-  describe("when setting clicked", () => {
+  describe("when setting link clicked", () => {
     it("should move to /settings path", () => {
       render(<AppHeader />);
       const settingsLink = screen.getByTestId("settings");
