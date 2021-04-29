@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
@@ -35,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && firebase deploy",
+    "deploy:hosting": "npm run build && firebase deploy --only hosting",
     "lint": "$(npm bin)/eslint -c ./.eslintrc.js 'src/**/*.{ts,tsx}'",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
@@ -53,13 +52,14 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.11.4",
+    "@babel/core": "^7.12.10",
     "@storybook/addon-actions": "^6.0.17",
     "@storybook/addon-essentials": "^6.0.17",
     "@storybook/addon-links": "^6.0.17",
     "@storybook/node-logger": "^6.0.17",
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "6.0.17",
+    "@testing-library/react": "^9.5.0",
     "@testing-library/react-hooks": "^3.4.1",
     "@types/chart.js": "^2.9.23",
     "@types/react-router-dom": "^5.1.5",
