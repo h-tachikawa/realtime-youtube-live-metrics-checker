@@ -59,7 +59,7 @@
     "@storybook/node-logger": "^6.0.17",
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "6.0.17",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.0.0",
     "@testing-library/react-hooks": "^3.4.1",
     "@types/chart.js": "^2.9.23",
     "@types/react-router-dom": "^5.1.5",
