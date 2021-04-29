@@ -3,6 +3,7 @@ import {
   render,
   screen,
 } from "@testing-library/react";
+import user from "@testing-library/user-event";
 import { AppHeader } from "./AppHeader";
 
 const mockHistoryPush = jest.fn();
@@ -32,7 +33,8 @@ describe("Container/AppHeader", () => {
   describe("when dashboard clicked", () => {
     it("should move to /dashboard path", () => {
       render(<AppHeader />);
-      screen.getByTestId("dashboard").click();
+      const dashboardLink = screen.getByTestId("dashboard");
+      user.click(dashboardLink);
 
       expect(mockHistoryPush.mock.calls).toMatchInlineSnapshot(`
         Array [
@@ -47,7 +49,8 @@ describe("Container/AppHeader", () => {
   describe("when setting clicked", () => {
     it("should move to /settings path", () => {
       render(<AppHeader />);
-      screen.getByTestId("settings").click();
+      const settingsLink = screen.getByTestId("settings");
+      user.click(settingsLink);
 
       expect(mockHistoryPush.mock.calls).toMatchInlineSnapshot(`
         Array [
