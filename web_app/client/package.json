@@ -5,10 +5,10 @@
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.20.11",
+    "@types/react": "^16.14.5",
+    "@types/react-dom": "^16.9.12",
     "@types/recoil": "^0.0.1",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
@@ -27,7 +27,7 @@
     "rxjs": "^6.6.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^1.2.0",
-    "typescript": "~3.7.2"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -70,6 +70,7 @@
     "eslint-plugin-react": "^7.20.6",
     "firebase-mock": "^2.3.2",
     "jest-environment-jsdom-sixteen": "^2.0.0",
+    "msw": "^0.28.2",
     "node-sass": "^4.14.1",
     "react-is": "^16.13.1",
     "react-test-renderer": "^16.13.1"
