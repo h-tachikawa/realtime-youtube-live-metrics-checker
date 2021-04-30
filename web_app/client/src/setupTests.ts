@@ -7,7 +7,7 @@ import { setupServer } from "msw/node";
 import { rest } from "msw";
 import { LiveSnippet } from "./type";
 
-const server = setupServer(
+export const server = setupServer(
     rest.get(`${process.env.REACT_APP_API_ENDPOINT_BASE}/api/live/snippet/:liveId`, (req, res, ctx) => {
       return res(ctx.json({
         videoId: "videoId",
