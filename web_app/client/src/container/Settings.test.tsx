@@ -34,7 +34,7 @@ describe("Container/Settings", () => {
 
   /**
    * ルーティングの変更をテストしたい場合は、<Router>の children に移動する可能性があるコンポーネントを全て入れる必要がある。
-   * 正直ここまでやりたいなら Cypress などでテストした方が良い気もする…。
+   * ここまで来るともはや E2E テストだし、Cypress などを使って検証した方が楽かも？
    */
   describe("when live id submitted", () => {
     it("should show notifier", async () => {
@@ -55,8 +55,6 @@ describe("Container/Settings", () => {
       await screen.findByText("配信IDを変更しました！", {}, {
         timeout: 4500,
       });
-
-      screen.debug();
     });
   });
 });
