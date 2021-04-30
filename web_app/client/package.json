@@ -16,6 +16,7 @@
     "eslint-plugin-react-app": "^6.2.2",
     "eslint-plugin-react-hooks": "^4.1.0",
     "firebase": "^7.18.0",
+    "fp-ts": "^2.10.4",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",

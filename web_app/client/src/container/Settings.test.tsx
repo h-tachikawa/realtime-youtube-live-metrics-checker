@@ -50,7 +50,7 @@ describe("Container/Settings", () => {
       const saveButton = screen.getByText("保存");
       user.click(saveButton);
       await screen.findByText("配信IDを変更しました！", {}, {
-        timeout: 4500,
+        timeout: 5000,
       });
     });
   });
