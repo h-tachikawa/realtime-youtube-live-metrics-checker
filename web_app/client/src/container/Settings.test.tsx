@@ -4,14 +4,27 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import user from "@testing-library/user-event";
 import { Settings } from "./Settings";
 import { allProviders } from "../test/test-utils";
+import { Router, MemoryRouter } from "react-router-dom";
+import { Dashboard } from "./Dashboard";
 
+jest.mock('react-chartjs-2', () => ({
+  Line: () => null
+}));
+
+// ルーティングが絡む処理はあるがテストの関心事にルーティングが無い場合は、<MemoryRouter> の children にテスト対象を渡せば良い。
+// 参考: https://testing-library.com/docs/example-react-router
 describe("Container/Settings", () => {
   describe("render",  () => {
     it("should render any input value", async () => {
-      render(<Settings />, {
+      render((
+          <MemoryRouter>
+            <Settings />
+          </MemoryRouter>
+      ), {
         wrapper: allProviders,
       });
 
@@ -19,9 +32,19 @@ describe("Container/Settings", () => {
     });
   });
 
+  /**
+   * ルーティングの変更をテストしたい場合は、<Router>の children に移動する可能性があるコンポーネントを全て入れる必要がある。
+   * 正直ここまでやりたいなら Cypress などでテストした方が良い気もする…。
+   */
   describe("when live id submitted", () => {
     it("should show notifier", async () => {
-      render(<Settings />, {
+      const history = createMemoryHistory();
+      render((
+          <Router history={history}>
+            <Dashboard />
+            <Settings />
+          </Router>
+      ), {
         wrapper: allProviders,
       });
 
@@ -32,6 +55,8 @@ describe("Container/Settings", () => {
       await screen.findByText("配信IDを変更しました！", {}, {
         timeout: 4500,
       });
+
+      screen.debug();
     });
   });
 });

@@ -2,11 +2,10 @@ import React, { ChangeEvent, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { notifierState } from "../recoil/atom/notifier";
-import { useNotifierEffect, useYoutubeLiveData } from "../hooks";
+import { useYoutubeLiveData } from "../hooks";
 import { Settings as ViewComponent } from "../component/Settings";
 
 export const Settings: React.FC = () => {
-  useNotifierEffect();
   const setNotifier = useSetRecoilState(notifierState);
   const history = useHistory();
   const { liveId: { currentLiveId, setLiveId, persistLiveId } } = useYoutubeLiveData();

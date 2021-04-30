@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, } from "@testing-library/react";
 import { Dashboard } from "./Dashboard";
 import { allProviders } from "../test/test-utils";
+import { MemoryRouter } from "react-router-dom";
 
 jest.mock('react-chartjs-2', () => ({
   Line: () => null
@@ -10,7 +11,11 @@ jest.mock('react-chartjs-2', () => ({
 describe("Container/Dashboard", () => {
   describe("render",  () => {
     it("should render", async () => {
-      render(<Dashboard />, {
+      render((
+          <MemoryRouter>
+            <Dashboard />
+          </MemoryRouter>
+      ), {
         wrapper: allProviders,
       });
 
