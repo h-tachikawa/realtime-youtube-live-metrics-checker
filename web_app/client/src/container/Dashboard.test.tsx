@@ -1,25 +1,11 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import {
-  render,
-  screen,
-} from "@testing-library/react";
+import { render, screen, } from "@testing-library/react";
 import { Dashboard } from "./Dashboard";
-import { RecoilRoot } from "recoil";
+import { allProviders } from "../test/test-utils";
 
 jest.mock('react-chartjs-2', () => ({
   Line: () => null
 }));
-
-const allProviders: React.FC = ({ children }) => {
-  return (
-      <RecoilRoot>
-        <MemoryRouter>
-          {children}
-        </MemoryRouter>
-      </RecoilRoot>
-  )
-}
 
 describe("Container/Dashboard", () => {
   describe("render",  () => {

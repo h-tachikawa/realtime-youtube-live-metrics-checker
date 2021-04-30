@@ -29,7 +29,7 @@ export const Settings: React.FC<Props> = ({ currentLiveId, onLiveIdChanges, onSu
                 />
               </Grid.Column>
               <Grid.Column width="4">
-                <input defaultValue={currentLiveId} onChange={onLiveIdChanges} />
+                <input defaultValue={currentLiveId} onChange={onLiveIdChanges} data-testid="live-id"/>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
