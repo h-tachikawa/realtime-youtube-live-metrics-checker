@@ -1,34 +1,47 @@
 import React from "react";
-import {
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import user from "@testing-library/user-event";
 import { Settings } from "./Settings";
 import { allProviders } from "../test/test-utils";
-import { Router, MemoryRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { Dashboard } from "./Dashboard";
 
-jest.mock('react-chartjs-2', () => ({
-  Line: () => null
+jest.mock("react-chartjs-2", () => ({
+  Line: () => null,
 }));
 
-// ルーティングが絡む処理はあるがテストの関心事にルーティングが無い場合は、<MemoryRouter> の children にテスト対象を渡せば良い。
-// 参考: https://testing-library.com/docs/example-react-router
-describe("Container/Settings", () => {
-  describe("render",  () => {
-    it("should render any input value", async () => {
-      render((
-          <MemoryRouter>
-            <Settings />
-          </MemoryRouter>
-      ), {
-        wrapper: allProviders,
-      });
+const mockHistoryPush = jest.fn();
+jest.mock("react-router-dom", () => ({
+  useHistory: () => ({
+    location: {
+      pathname: "/settings",
+    },
+    push: mockHistoryPush,
+  }),
+}));
 
+describe("Container/Settings", () => {
+  afterEach(() => mockHistoryPush.mockClear());
+
+  describe("render", () => {
+    it("should render any input value", async () => {
+      render(<Settings />, { wrapper: allProviders });
       await waitFor(() => expect(screen.getByTestId("live-id")).toHaveDisplayValue(/.+/));
+    });
+  });
+
+  describe("when live id submitted", () => {
+    it("should go /dashboard", async () => {
+      render(<Settings />, {wrapper: allProviders});
+
+      const liveIdInput = screen.getByTestId("live-id");
+      await user.type(liveIdInput, "lkIJYc4UH60");
+      const saveButton = screen.getByText("保存");
+      user.click(saveButton);
+      await waitFor(() => expect(mockHistoryPush).toBeCalled());
+
+      expect(mockHistoryPush.mock.calls[0][0]).toBe("/dashboard");
     });
   });
 
@@ -38,22 +51,27 @@ describe("Container/Settings", () => {
     it("should show notifier", async () => {
       jest.setTimeout(10000);
       const history = createMemoryHistory();
-      render((
-          <Router history={history}>
-            <Dashboard />
-            <Settings />
-          </Router>
-      ), {
-        wrapper: allProviders,
-      });
+      render(
+        <Router history={history}>
+          <Dashboard />
+          <Settings />
+        </Router>,
+        {
+          wrapper: allProviders,
+        }
+      );
 
       const liveIdInput = screen.getByTestId("live-id");
       await user.type(liveIdInput, "lkIJYc4UH60");
       const saveButton = screen.getByText("保存");
       user.click(saveButton);
-      await screen.findByText("配信IDを変更しました！", {}, {
-        timeout: 10000,
-      });
+      await screen.findByText(
+        "配信IDを変更しました！",
+        {},
+        {
+          timeout: 10000,
+        }
+      );
     });
   });
 });
