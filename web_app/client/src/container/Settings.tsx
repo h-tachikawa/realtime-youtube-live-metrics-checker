@@ -22,7 +22,7 @@ export const Settings: React.FC = () => {
 
   const retryMessage = "配信IDの変更に失敗しました。再度お試しください。";
 
-  const persistLiveIdTask = (
+  const createPersistLiveIdTask = (
     liveId: string
   ): TE.TaskEither<WrappedError, void> =>
     TE.tryCatch(
@@ -42,7 +42,7 @@ export const Settings: React.FC = () => {
     );
 
   const handleSubmit = useCallback(async () => {
-    const result = await persistLiveIdTask(currentLiveId)();
+    const result = await createPersistLiveIdTask(currentLiveId)();
     pipe(
       result,
       E.match(
