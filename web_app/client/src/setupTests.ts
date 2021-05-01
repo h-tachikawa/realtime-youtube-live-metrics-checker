@@ -5,18 +5,11 @@
 import '@testing-library/jest-dom/extend-expect';
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import { LiveSnippet } from "./type";
+import { dummyApiResponse } from "./test/dummyApiResponse";
 
 export const server = setupServer(
     rest.get(`${process.env.REACT_APP_API_ENDPOINT_BASE}/api/live/snippet/:liveId`, (req, res, ctx) => {
-      return res(ctx.json({
-        videoId: "videoId",
-        channelTitle: "channelTitle",
-        liveUrl: "https://example.com/live",
-        tags: ["VTuber", "ゲーム実況"],
-        thumbnailImageUrl: "https://example.com/image.jpg",
-        title: "テトリス実況プレイ",
-      } as LiveSnippet));
+      return res(ctx.json(dummyApiResponse.liveSnippet));
     }),
 );
 
