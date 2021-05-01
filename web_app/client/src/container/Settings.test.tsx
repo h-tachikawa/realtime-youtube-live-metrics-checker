@@ -35,6 +35,7 @@ describe("Container/Settings", () => {
   // ルーティングの変更をテストしたい場合は、<Router>の children に移動する可能性があるコンポーネントを全て入れる必要がある。
   describe("when live id submitted", () => {
     it("should show notifier", async () => {
+      jest.setTimeout(10000);
       const history = createMemoryHistory();
       render((
           <Router history={history}>
@@ -50,7 +51,7 @@ describe("Container/Settings", () => {
       const saveButton = screen.getByText("保存");
       user.click(saveButton);
       await screen.findByText("配信IDを変更しました！", {}, {
-        timeout: 5000,
+        timeout: 10000,
       });
     });
   });
