@@ -2,6 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import { LiveDetail, LiveSetting, LiveSnippet } from "../type";
 import { LiveRepository } from "../repository";
 import firebase, { firestore } from "../external/firebase";
+import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/TaskEither";
+import * as T from "fp-ts/Task";
+
+type WrappedError = {
+  raw: Error | null;
+  description: string;
+};
 
 export const useYoutubeLiveData = () => {
   const [liveId, setLiveId] = useState<string>("");
@@ -12,15 +20,19 @@ export const useYoutubeLiveData = () => {
     tags: [],
     thumbnailImageUrl: "",
     title: "",
-    videoId: ""
+    videoId: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    firestore.collection("settings").doc("setting").get().then((docSnapshot) => {
-      const res = docSnapshot.data() as LiveSetting;
-      setLiveId((res.videoId));
-    });
+    firestore
+      .collection("settings")
+      .doc("setting")
+      .get()
+      .then((docSnapshot) => {
+        const res = docSnapshot.data() as LiveSetting;
+        setLiveId(res.videoId);
+      });
   }, []);
 
   useEffect(() => {
@@ -31,25 +43,50 @@ export const useYoutubeLiveData = () => {
     setIsLoading(true);
     LiveRepository.fetchLiveSnippet(liveId).then(({ data }) => {
       data.liveUrl = `https://www.youtube.com/watch?v=${data.videoId}`;
-      setLiveSnippet(data)
+      setLiveSnippet(data);
       setIsLoading(false);
     });
 
-    const unsubscribe = firestore.collection("lives")
-        .where("videoId", "==", liveId)
-        .orderBy("time", "desc")
-        .limit(10)
-        .onSnapshot((querySnapshot) => {
-          const liveDetails = convertToLiveDetails(querySnapshot)
-          setLiveDetails(liveDetails);
-        });
+    const unsubscribe = firestore
+      .collection("lives")
+      .where("videoId", "==", liveId)
+      .orderBy("time", "desc")
+      .limit(10)
+      .onSnapshot((querySnapshot) => {
+        const liveDetails = convertToLiveDetails(querySnapshot);
+        setLiveDetails(liveDetails);
+      });
 
     return () => unsubscribe();
   }, [setLiveDetails, liveId]);
 
-  const persistLiveId = useCallback((liveId: string) => {
-    return firestore.collection("settings").doc("setting").update({ videoId: liveId});
-  }, []);
+  const retryMessage = "配信IDの変更に失敗しました。再度お試しください。";
+
+  const createPersistLiveIdTask = useCallback(
+    (liveId: string): TE.TaskEither<WrappedError, void> =>
+      TE.tryCatch(
+        () =>
+          firestore
+            .collection("settings")
+            .doc("setting")
+            .update({ videoId: liveId }),
+        (err) => {
+          if (err instanceof Error) {
+            return {
+              raw: err,
+              description: retryMessage,
+            };
+          }
+          return {
+            raw: null,
+            description: retryMessage,
+          };
+        }
+      ),
+    []
+  );
+
+  const persistLiveId = (liveId: string) => createPersistLiveIdTask(liveId)();
 
   return {
     isLoading,
@@ -59,11 +96,13 @@ export const useYoutubeLiveData = () => {
       persistLiveId,
     },
     liveDetails,
-    liveSnippet
+    liveSnippet,
   };
 };
 
-const convertToLiveDetails = (querySnapshot: firebase.firestore.QuerySnapshot) => {
+const convertToLiveDetails = (
+  querySnapshot: firebase.firestore.QuerySnapshot
+) => {
   const liveDetails: LiveDetail[] = [];
   querySnapshot.forEach((doc) => {
     const liveDetail = doc.data() as LiveDetail;

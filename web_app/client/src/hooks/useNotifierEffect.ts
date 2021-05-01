@@ -16,14 +16,14 @@ export const useNotifierEffect = () => {
         toast.info(notifier.text, { hideProgressBar: true, transition: Slide, onClose: (props) => {
           setNotifier({type: "none" });
         }});
-        break;
+        return () => setNotifier({ type: "none" });
       case "error":
         toast.error(notifier.text, { hideProgressBar: true, transition: Slide, onClose: (props) => {
           setNotifier({type: "none" });
         }});
-        break;
+        return () => setNotifier({ type: "none" });
       default:
-        break;
+        return () => setNotifier({ type: "none" });
     }
   }, [notifier.type]);
 };
