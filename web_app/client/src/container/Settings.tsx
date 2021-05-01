@@ -9,7 +9,7 @@ import { Settings as ViewComponent } from "../component/Settings";
 import { pipe } from "fp-ts/lib/function";
 
 type WrappedError = {
-  raw: Error;
+  raw: Error | null;
   description: string;
 };
 
@@ -35,7 +35,7 @@ export const Settings: React.FC = () => {
           };
         }
         return {
-          raw: new Error(),
+          raw: null,
           description: retryMessage,
         };
       }
@@ -43,7 +43,6 @@ export const Settings: React.FC = () => {
 
   const handleSubmit = useCallback(async () => {
     const result = await persistLiveIdTask(currentLiveId)();
-
     pipe(
       result,
       E.match(
