@@ -2,9 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { LiveDetail, LiveSetting, LiveSnippet } from "../type";
 import { LiveRepository } from "../repository";
 import firebase, { firestore } from "../external/firebase";
-import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/TaskEither";
-import * as T from "fp-ts/Task";
 
 type WrappedError = {
   raw: Error | null;
