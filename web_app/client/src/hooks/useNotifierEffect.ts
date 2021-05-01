@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { notifierState } from "../recoil/atom/notifier";
 import { useEffect } from "react";
 
+// 単体でテストが書きにくく、かつ実際に通知が表示されることは Container のテストで確認できるため、テストは書かない。
 export const useNotifierEffect = () => {
   const [ notifier, setNotifier ] = useRecoilState(notifierState);
 
