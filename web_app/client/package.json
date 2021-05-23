@@ -42,7 +42,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "screenshot": "storycap --serverCmd 'start-storybook -p 6006 -s public' http://localhost:6006",
-    "visual-test": "reg-suit run --quiet"
+    "visual-test": "reg-suit run"
   },
   "browserslist": {
     "production": [
