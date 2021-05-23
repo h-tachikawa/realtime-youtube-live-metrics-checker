@@ -40,7 +40,9 @@
     "lint": "$(npm bin)/eslint -c ./.eslintrc.js 'src/**/*.{ts,tsx}'",
     "type": "tsc --noEmit",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "screenshot": "storycap --serverCmd 'start-storybook -p 6006 -s public' http://localhost:6006",
+    "visual-test": "reg-suit run --quiet"
   },
   "browserslist": {
     "production": [
@@ -76,6 +78,11 @@
     "msw": "^0.28.2",
     "node-sass": "^4.14.1",
     "react-is": "^16.13.1",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "reg-keygen-git-hash-plugin": "^0.10.15",
+    "reg-notify-github-plugin": "^0.10.15",
+    "reg-publish-gcs-plugin": "^0.10.15",
+    "reg-suit": "^0.10.15",
+    "storycap": "^3.0.4"
   }
 }
