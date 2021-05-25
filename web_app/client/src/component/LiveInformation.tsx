@@ -43,7 +43,7 @@ export const LiveInformation: React.FC<Props> = ({ thumbnailImageUrl, liveUrl, c
                   {title}
                 </List.Item>
                 <List.Item>
-                  <List.Header>設定されているメタタグ</List.Header>
+                  <List.Header>設定されているタグ</List.Header>
                   {tags == null ? "なし" : tags.map((tagText, i) => (
                       <Label as='a' tag key={i}>
                         {tagText}
