@@ -1,0 +1,32 @@
+name: reg
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web_app/client
+    steps:
+      - name: add JP font
+        run: |
+          sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+        with:
+          fetch-depth: 0
+      - name: Set Node.js 13.x
+        uses: actions/setup-node@v1.3.0
+        with:
+          node-version: 13.x
+      - run: npm ci
+      - name: workaround for detached HEAD
+        run: |
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
+      - name: run storybook generate
+        run: npm run ci:storybook-generate
+      - name: run storycap
+        run: npm run ci:storycap
+      - name: run reg-suit
+        run: npm run ci:vrt
