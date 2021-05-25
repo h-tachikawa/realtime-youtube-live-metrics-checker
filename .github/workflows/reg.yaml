@@ -13,6 +13,13 @@ jobs:
         uses: actions/checkout@v2.0.0
         with:
           fetch-depth: 0
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: rt-ytube-live-metrics-checker
+          service_account_email: my-ci-account@rt-ytube-live-metrics-checker.iam.gserviceaccount.com
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
       - name: Set Node.js 13.x
         uses: actions/setup-node@v2
         with:
