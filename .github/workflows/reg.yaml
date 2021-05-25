@@ -9,9 +9,6 @@ jobs:
       run:
         working-directory: ./web_app/client
     steps:
-      - name: add JP font
-        run: |
-          sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho
       - name: Checkout
         uses: actions/checkout@v2.0.0
         with:
@@ -24,6 +21,8 @@ jobs:
       - name: workaround for detached HEAD
         run: |
           git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
+      - name: add JP font
+        run: sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho
       - name: run storybook generate
         run: npm run ci:storybook-generate
       - name: run storycap
